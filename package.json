@@ -1,0 +1,25 @@
+{
+  "name": "jonjamesit",
+  "version": "1.0.0",
+  "description": "ideas revealed",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node server.js",
+    "start": "NODE_ENV=production node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lolotrgeek/jonjamesit.git"
+  },
+  "author": "lolotrgeek",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lolotrgeek/jonjamesit/issues"
+  },
+  "homepage": "https://jonjamesit.com",
+  "dependencies": {
+    "express": "^4.16.4",
+    "serverless-http": "^1.10.0"
+  }
+}
