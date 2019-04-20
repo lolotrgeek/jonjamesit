@@ -253,3 +253,17 @@ input:focus, textarea:focus {
 footer {
 	border-top: 1px solid #eee;
 }
+
+/* FOOTER */
+
+.footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  font-size: .8rem;
+  margin: .5rem 0;
+}
+
+.footer > a {
+  padding: 0 .5rem;
+}

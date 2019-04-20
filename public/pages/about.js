@@ -1,9 +1,8 @@
 let about = `
-<h1>Interests</h1>
-
+<h1>About</h1>
 <h2>Life Mission</h2>
 <p>Raise the standard of living for all humanity.
-    <br>Gaurentee food, water, and shelter for all people.
+    <br>Food, water, and shelter for all people.
     <br>Decouple money and survival.
     <br>Make us more adapted any environment.
     <br>Free humanity to spend our time and energy solving a higher set of problems.
