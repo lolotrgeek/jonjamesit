@@ -16,9 +16,5 @@
     "url": "https://github.com/lolotrgeek/jonjamesit/issues"
   },
   "homepage": "https://jonjamesit.com",
-  "dependencies": {
-    "node-fetch": "^2.3.0",
-    "scrape-it": "^5.1.4",
-    "showdown": "^1.9.0"
-  }
+  "dependencies": {}
 }
