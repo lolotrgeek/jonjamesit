@@ -106,8 +106,7 @@ const queries = {
     getAll(contents, firstContentRow),
     getAll(postlastEdit, firstContentRow)],
 }
-// const apikey = 'AIzaSyDLgbHuIKYEhhDoVz9pdwkU4LgqNGMQT3A'
-const apikey = 'AIzaSyDLlvpEQTHOvWH1jIXbXZCw_hEoxEGKQ9k'
+const apikey = 'AIzaSyDLgbHuIKYEhhDoVz9pdwkU4LgqNGMQT3A'
 const sheetid = '17mMZ4fb-IpTDbqoTxdjF_EeRpnoJuef58yMHIQI9Ri4'
 const base = 'https://sheets.googleapis.com/v4/spreadsheets/'
 
