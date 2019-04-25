@@ -146,7 +146,12 @@ const parseQuery = async (query) => new Promise((resolve, reject) => {
         reject('404')
     }
     else if (query.valueRanges) {
-        if (query.valueRanges.length === 3) {
+        if (query.valueRanges.length === 2) {
+            result.post = query.valueRanges[0].values
+            result.lastEdit = query.valueRanges[1].values[0][0]
+            resolve(result) // post
+        }
+        else if (query.valueRanges.length === 3) {
             result.titles = query.valueRanges[0].values
             result.links = query.valueRanges[1].values
             result.lastEdit = query.valueRanges[2].values[0][0]
@@ -159,7 +164,7 @@ const parseQuery = async (query) => new Promise((resolve, reject) => {
             result.dates = query.valueRanges[3].values
             result.content = query.valueRanges[4].values
             result.lastEdit = query.valueRanges[5].values[0][0]
-            resolve(result) // posts
+            resolve(result) // all posts
         } else {
             console.log('query incorrect length')
             reject('404')
