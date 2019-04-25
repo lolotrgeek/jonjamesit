@@ -195,7 +195,7 @@ const followRoute = (routes) => {
     return new Promise((resolve, reject) => {
         // get a post
         if (typeof path === 'number') {
-            let post = get(contents, path)
+            let post = [get(contents, path), get(postlastEdit, path)]
             checkCache(path.toString())
                 .then(posts => {
                     console.log('found post in cache')
@@ -210,7 +210,8 @@ const followRoute = (routes) => {
                         .then(result => {
                             let storePost = {}
                             storePost.post = result.post
-                            storePost.lastEdit = get(postlastEdit, path)
+                            storePost.lastEdit = result.lastEdit
+                            console.log(post)
                             console.log('saving post')
                             window.localStorage.setItem(path.toString(), JSON.stringify(storePost))
                             resolve(result.post)
@@ -242,7 +243,7 @@ const checkCache = (name) => new Promise((resolve, reject) => {
                 else {
                     let foundItem = JSON.parse(localItem)
                     console.log('Local Last Edit: ' + foundItem.lastEdit)
-                    // console.log(parseInt(foundItem.lastEdit))
+                    console.log(foundItem)
                     if (!foundItem.lastEdit || !parseInt(foundItem.lastEdit)){
                         window.localStorage.removeItem(name)
                         reject('local item invalid, get new one')
