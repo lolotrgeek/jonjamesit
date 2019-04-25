@@ -106,7 +106,8 @@ const queries = {
     getAll(contents, firstContentRow),
     getAll(postlastEdit, firstContentRow)],
 }
-const apikey = 'AIzaSyDLgbHuIKYEhhDoVz9pdwkU4LgqNGMQT3A'
+// const apikey = 'AIzaSyDLgbHuIKYEhhDoVz9pdwkU4LgqNGMQT3A'
+const apikey = 'AIzaSyDLlvpEQTHOvWH1jIXbXZCw_hEoxEGKQ9k'
 const sheetid = '17mMZ4fb-IpTDbqoTxdjF_EeRpnoJuef58yMHIQI9Ri4'
 const base = 'https://sheets.googleapis.com/v4/spreadsheets/'
 
@@ -209,7 +210,7 @@ const followRoute = (routes) => {
     return new Promise((resolve, reject) => {
         // get a post
         if (typeof path === 'number') {
-            let post = [get(title, path), get(date, path), get(contents, path), get(postlastEdit, path)]
+            let post = [get(titles, path), get(dates, path), get(contents, path), get(postlastEdit, path)]
             checkCache(path.toString())
                 .then(posts => {
                     console.log('found post in cache')
