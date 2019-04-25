@@ -148,9 +148,9 @@ const parseQuery = async (query) => new Promise((resolve, reject) => {
     }
     else if (query.valueRanges) {
         if (query.valueRanges.length === 4) {
-            result.title = query.valueRanges[0].values
-            result.date = query.valueRanges[1].values
-            result.post = query.valueRanges[2].values
+            result.title = query.valueRanges[0].values[0][0]
+            result.date = query.valueRanges[1].values[0][0]
+            result.post = query.valueRanges[2].values[0][0]
             result.lastEdit = query.valueRanges[3].values[0][0]
             resolve(result) // post
         }
@@ -187,9 +187,9 @@ const buildBlog = (result) => new Promise((resolve, reject) => {
 })
 
 const buildPost = (result) => new Promise((resolve, reject) => {
-    let post = `<h2 class='post-title'>${result.title}</h2>`
-        `<h3 class='post-date'>${result.date}</h3>`
-        `<div class='post-content'>${result.post}</div>`
+    let post = `<h2 class='post-title'>${result.title}</h2>
+        <h3 class='post-date'>${result.date}</h3>
+        <div class='post-content'>${result.post}</div>`
     resolve(post)
 })
 
@@ -228,16 +228,13 @@ const followRoute = (routes) => {
                                     let storePost = {}
                                     storePost.post = post
                                     storePost.lastEdit = result.lastEdit
-                                    console.log(post)
                                     console.log('saving post')
                                     window.localStorage.setItem(path.toString(), JSON.stringify(storePost))
-                                    resolve(result.post)
+                                    resolve(post)
                                 })
-
                         })
                         .catch(err => reject(err))
                 })
-
         }
         else {
             resolve(path)
