@@ -4,10 +4,10 @@
 let contentDiv = document.getElementById('content')
 
 const person = {
-  name: 'Jonathan James',
-  job: '',
-  city: 'St. Louis',
-  bio: 'Ideas revealed.'
+    name: 'Jonathan James',
+    job: '',
+    city: 'St. Louis',
+    bio: 'Ideas revealed.'
 }
 
 const headerContent = `
@@ -40,16 +40,16 @@ const footerContent = `<footer class="footer">
  */
 document.body.onload = header(headerContent)
 function header(content) {
-  const header = document.createElement("div")
-  header.innerHTML = content
-  const first = document.body.firstChild
-  document.body.insertBefore(header, first)
+    const header = document.createElement("div")
+    header.innerHTML = content
+    const first = document.body.firstChild
+    document.body.insertBefore(header, first)
 }
 function footer(content) {
-  const footer = document.createElement("div")
-  footer.innerHTML = content
-  const last = document.body.lastChild
-  document.body.insertBefore(footer, last)
+    const footer = document.createElement("div")
+    footer.innerHTML = content
+    const last = document.body.lastChild
+    document.body.insertBefore(footer, last)
 }
 
 
@@ -57,10 +57,10 @@ function footer(content) {
  * ROUTING
  */
 let routes = {
-  '/': home,
-  '/index.html': home,
-  '/about': about,
-  '/contact': contact
+    '/': home,
+    '/index.html': home,
+    '/about': about,
+    '/contact': contact
 }
 // window.onpopstate = () => contentDiv.innerHTML = routes[window.location.pathname]
 // let onNavItemClick = (pathName) => {
@@ -97,14 +97,14 @@ const queries = {
     tags: getAll(tags, firstContentRow),
     dates: getAll(dates, firstContentRow),
     contents: getAll(contents, firstContentRow),
-    routes:  [getAll(titles, firstContentRow), 
-        getAll(urls, firstContentRow), 
-        lastEdit], 
-    posts: [getAll(titles, firstContentRow), 
-        getAll(urls, firstContentRow),
-        getAll(dates, firstContentRow), 
-        getAll(contents, firstContentRow), 
-        getAll(postlastEdit, firstContentRow)],
+    routes: [getAll(titles, firstContentRow),
+    getAll(urls, firstContentRow),
+        lastEdit],
+    posts: [getAll(titles, firstContentRow),
+    getAll(urls, firstContentRow),
+    getAll(dates, firstContentRow),
+    getAll(contents, firstContentRow),
+    getAll(postlastEdit, firstContentRow)],
 }
 const apikey = 'AIzaSyDLgbHuIKYEhhDoVz9pdwkU4LgqNGMQT3A'
 const sheetid = '17mMZ4fb-IpTDbqoTxdjF_EeRpnoJuef58yMHIQI9Ri4'
@@ -146,9 +146,11 @@ const parseQuery = async (query) => new Promise((resolve, reject) => {
         reject('404')
     }
     else if (query.valueRanges) {
-        if (query.valueRanges.length === 2) {
-            result.post = query.valueRanges[0].values
-            result.lastEdit = query.valueRanges[1].values[0][0]
+        if (query.valueRanges.length === 4) {
+            result.title = query.valueRanges[0].values
+            result.date = query.valueRanges[1].values
+            result.post = query.valueRanges[2].values
+            result.lastEdit = query.valueRanges[3].values[0][0]
             resolve(result) // post
         }
         else if (query.valueRanges.length === 3) {
@@ -183,6 +185,13 @@ const buildBlog = (result) => new Promise((resolve, reject) => {
     resolve(blog)
 })
 
+const buildPost = (result) => new Promise((resolve, reject) => {
+    let post = `<h2 class='post-title'>${result.title}</h2>`
+        `<h3 class='post-date'>${result.date}</h3>`
+        `<div class='post-content'>${result.post}</div>`
+    resolve(post)
+})
+
 const buildRoutes = async (result) => new Promise((resolve, reject) => {
     console.log('building routes')
     routes.lastEdit = result.lastEdit
@@ -200,7 +209,7 @@ const followRoute = (routes) => {
     return new Promise((resolve, reject) => {
         // get a post
         if (typeof path === 'number') {
-            let post = [get(contents, path), get(postlastEdit, path)]
+            let post = [get(title, path), get(date, path), get(contents, path), get(postlastEdit, path)]
             checkCache(path.toString())
                 .then(posts => {
                     console.log('found post in cache')
@@ -212,14 +221,18 @@ const followRoute = (routes) => {
                     buildQuery(post)
                         .then(url => getQuery(url))
                         .then(query => parseQuery(query))
-                        .then(result => {
-                            let storePost = {}
-                            storePost.post = result.post
-                            storePost.lastEdit = result.lastEdit
-                            console.log(post)
-                            console.log('saving post')
-                            window.localStorage.setItem(path.toString(), JSON.stringify(storePost))
-                            resolve(result.post)
+                        .then((result) => {
+                            buildPost(result)
+                                .then(post => {
+                                    let storePost = {}
+                                    storePost.post = post
+                                    storePost.lastEdit = result.lastEdit
+                                    console.log(post)
+                                    console.log('saving post')
+                                    window.localStorage.setItem(path.toString(), JSON.stringify(storePost))
+                                    resolve(result.post)
+                                })
+
                         })
                         .catch(err => reject(err))
                 })
@@ -233,7 +246,7 @@ const followRoute = (routes) => {
 
 const checkCache = (name) => new Promise((resolve, reject) => {
     let localItem = window.localStorage.getItem(name)
-    console.log('looking for newest item: '+name)
+    console.log('looking for newest item: ' + name)
     if (!localItem) {
         reject('No local ' + name + ' found')
     } else {
@@ -248,8 +261,7 @@ const checkCache = (name) => new Promise((resolve, reject) => {
                 else {
                     let foundItem = JSON.parse(localItem)
                     console.log('Local Last Edit: ' + foundItem.lastEdit)
-                    console.log(foundItem)
-                    if (!foundItem.lastEdit || !parseInt(foundItem.lastEdit)){
+                    if (!foundItem.lastEdit || !parseInt(foundItem.lastEdit)) {
                         window.localStorage.removeItem(name)
                         reject('local item invalid, get new one')
                     }
