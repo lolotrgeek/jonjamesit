@@ -70,7 +70,7 @@ let routes = {
 // contentDiv.innerHTML = routes[window.location.pathname]
 
 /**
- * CMS
+ * CMS - Blog
  */
 
 // sheet
@@ -176,7 +176,6 @@ const buildBlog = (result) => new Promise((resolve, reject) => {
       ${result.titles.map((title, index) => `<li class="post-title"><a href="/${result.links[index]} ">${title}</a></li>`).join('')}
       </ul>`
     resolve(blog)
-
 })
 
 const buildRoutes = async (result) => new Promise((resolve, reject) => {
