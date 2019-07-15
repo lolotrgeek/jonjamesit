@@ -173,6 +173,13 @@ input:focus, textarea:focus {
 	padding-top: 100%;
 }
 
+.post-title {
+	text-align: left;
+}
+
+.post-date {
+	text-align: left;
+}
 .post-image {
 	position:  absolute;
 	top: 0;
